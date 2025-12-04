@@ -71,7 +71,7 @@ public class AuthController {
 
 
     @GetMapping("/me")
-   public ResponseEntity<UserDto> me(){
+   public ResponseEntity<UserDto> getCurrentUser(){
         //Extracting the current principals or user
       var authentication =  SecurityContextHolder.getContext().getAuthentication();
       var userId = (Long) authentication.getPrincipal();
@@ -81,12 +81,12 @@ public class AuthController {
          return ResponseEntity.notFound().build();
      }
      //Map the user
-     var userDto = userMappers.userDto(user);
+     var userDto = userMappers.toDto(user);
      return ResponseEntity.ok(userDto);
 
     }
 
-    @ExceptionHandler({BadCredentialsException.class})
+    @ExceptionHandler(BadCredentialsException.class)
    public ResponseEntity <Void> handleBadCredentialsException(){
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
    }

@@ -3,8 +3,10 @@ package com.codewithmosh.store.controller;
 import com.codewithmosh.store.dtos.ProductDto;
 import com.codewithmosh.store.entities.Product;
 import com.codewithmosh.store.mappers.ProductsMappers;
+import com.codewithmosh.store.mappers.UserMappers;
 import com.codewithmosh.store.repositories.CategoryRepository;
 import com.codewithmosh.store.repositories.ProductRepository;
+import com.codewithmosh.store.repositories.UserRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,7 @@ import java.util.List;
 @Tag(name = "Product-Controller")
 
 public class ProductController {
+
 
     private final ProductRepository productRepository;
     private final ProductsMappers productsMappers;
@@ -83,6 +86,7 @@ public class ProductController {
         productRepository.save(product);
         request.setId(product.getId());
 
+
         var uri =   uriBuilder.path("/products/{id}").buildAndExpand(product.getId()).toUri();
 
 
@@ -98,7 +102,7 @@ public class ProductController {
             return ResponseEntity.notFound().build();
         }
         productRepository.delete(product);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
 
   }
 

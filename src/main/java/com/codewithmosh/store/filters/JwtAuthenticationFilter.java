@@ -16,8 +16,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.List;
 
-@AllArgsConstructor
 @Component
+@AllArgsConstructor
+
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     @Override
@@ -35,10 +36,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
            return;
 
        }
+
+
         var authentication = new UsernamePasswordAuthenticationToken(
                 jwt.getUserId(),
                null,
-               List.of(new SimpleGrantedAuthority("ROLE_" + jwt.getRole()))
+               List.of(new SimpleGrantedAuthority("ROLE_" + jwt.getRole().name()))
        );
        authentication.setDetails(
                new WebAuthenticationDetailsSource().buildDetails(request)

@@ -12,7 +12,7 @@ import org.mapstruct.MappingTarget;
 @Mapper(componentModel = "spring") // MapStruct will auto-generate implementation and make it a Spring Bean
 public interface UserMappers {
 
-    UserDto userDto(User user); // Converts User entity → UserDto (for response)
+    UserDto toDto(User user); // Converts User entity → UserDto (for response)
 
     User toEntity(RegisterUserRequest request); // Converts RegisterUserRequest → User entity (for saving)
 

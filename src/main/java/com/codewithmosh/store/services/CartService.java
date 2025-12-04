@@ -16,9 +16,9 @@ import java.util.UUID;
 @AllArgsConstructor
 @Service
 public class CartService {
-    private final CartRepository cartRepository;
-    private final CartMappers cartMappers;
-    private final ProductRepository productRepository;
+    private  CartRepository cartRepository;
+    private  CartMappers cartMappers;
+    private  ProductRepository productRepository;
 
     public CartDto createCart(){
        var cart = new Cart();
@@ -65,7 +65,7 @@ public class CartService {
         var cartItem = cart.getItem(productId);
 
         if (cartItem == null) {
-            throw new CartNotFoundException();
+            throw new ProductNotFoundException();
         }
         cartItem.setQuantity(quantity);
         cartRepository.save(cart);

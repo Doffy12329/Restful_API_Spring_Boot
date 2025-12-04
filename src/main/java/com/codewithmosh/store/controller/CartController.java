@@ -6,9 +6,6 @@ import com.codewithmosh.store.dtos.CartItemDto;
 import com.codewithmosh.store.dtos.UpdateCartItemRequest;
 import com.codewithmosh.store.exceptions.CartNotFoundException;
 import com.codewithmosh.store.exceptions.ProductNotFoundException;
-import com.codewithmosh.store.mappers.CartMappers;
-import com.codewithmosh.store.repositories.CartRepository;
-import com.codewithmosh.store.repositories.ProductRepository;
 import com.codewithmosh.store.services.CartService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -28,10 +25,8 @@ import java.util.UUID;
 @RequestMapping("/carts")
 @Tag(name = "Cart-Controller")
 public class CartController {
-    private final ProductRepository productRepository;
     private final CartService cartService;
-    private CartMappers cartMappers;
-    private final CartRepository cartRepository;
+
 
     @PostMapping
     public ResponseEntity<CartDto> createCart(

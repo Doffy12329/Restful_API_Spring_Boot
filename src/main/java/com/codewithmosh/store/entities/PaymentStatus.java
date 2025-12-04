@@ -1,8 +1,10 @@
 package com.codewithmosh.store.entities;
 
-public enum OrderStatus {
+public enum PaymentStatus {
     PENDING,
     SHIPPED,
     DELIVERED,
-    CANCELED
+    CANCELED,
+    PAID,
+    FAILED
 }

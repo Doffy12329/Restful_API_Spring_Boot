@@ -1,11 +1,8 @@
 package com.codewithmosh.store.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -19,7 +16,7 @@ import java.util.Set;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Long id;
 
 
@@ -30,7 +27,7 @@ public class Order {
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
-    private OrderStatus status;
+    private PaymentStatus status;
 
 
     @Column(name = "created_at", insertable = false, updatable = false)
@@ -40,13 +37,13 @@ public class Order {
     @Column(name = "total_price")
     private BigDecimal totalPrice;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "order", cascade =  {CascadeType.PERSIST,CascadeType.REMOVE})
     private Set<OrdersItem> items = new LinkedHashSet<>();
 
     public static Order fromCart(Cart cart, User customer) {
         var order = new Order();
         order.setCustomer(customer);
-        order.setStatus(OrderStatus.PENDING);
+        order.setStatus(PaymentStatus.PENDING);
         order.setTotalPrice(cart.getTotalPrice());
 
         cart.getItems().forEach(item -> {
@@ -55,8 +52,9 @@ public class Order {
     });
     return order;
 }
-public boolean isPlacedBy(User customer){
-       return this.customer.equals(customer);
+public boolean isPlacedBy(User customer)
+{
+    return this.customer.equals(customer);
 }
 
 }

@@ -24,15 +24,6 @@ public class JwtService {
 
         return generateToken(user, jwtConfig.getRefreshTokenExpiration());
     }
-    public Jwt parseToken(String token) {
-        try {
-            var claims = getClaims(token);
-            return new Jwt(claims,jwtConfig.getSecretKey());
-        }catch (JwtException e){
-
-            return null;
-        }
-    }
 
     private Jwt generateToken(User user, long tokeExpiration) {
         var claims = Jwts.claims()
@@ -46,6 +37,16 @@ public class JwtService {
 
         return new Jwt(claims,jwtConfig.getSecretKey());
     }
+    public Jwt parseToken(String token) {
+        try {
+            var claims = getClaims(token);
+            return new Jwt(claims,jwtConfig.getSecretKey());
+        }catch (JwtException e){
+
+            return null;
+        }
+    }
+
 
 
     private Claims getClaims(String token) {

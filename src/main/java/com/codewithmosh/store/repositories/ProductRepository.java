@@ -14,7 +14,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByCategoryId(Byte categoryId);
 
     @EntityGraph(attributePaths = "category")
-    @Query("SELECT p FROM Product p")
+    @Query("SELECT p FROM Product p JOIN FETCH p.category")
     List <Product> findAllWithCategory();
 
 
